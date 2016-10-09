@@ -25,13 +25,24 @@ CREATE TABLE `usuarios`
 	`id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
 
 	`email` VARCHAR(140) UNIQUE NOT NULL, 
-	`senha` CHAR(64) NOT NULL, -- SHA256 em Hexadecimal
+	`senha` CHAR(60) NOT NULL CHARSET `ASCII`, -- Crypto string functions.php
 
 	`nome` VARCHAR(190) NOT NULL,
 
-    -- IDs que são permitidas a rastrear esse usuário, separadas por ","
-	`permitidos_rastreamento` VARCHAR(1000) CHARSET `ASCII` NOT NULL DEFAULT '',
 	INDEX(`id`), INDEX(`email`)
+)
+CHARSET=`UTF8` ENGINE=`INNODB`;
+
+
+
+CREATE TABLE `pareamentos`
+(
+	`id_rastreado` BIGINT UNSIGNED NOT NULL,
+	`id_receiver` BIGINT UNSIGNED NOT NULL,
+	`habilitado` BOOL NOT NULL DEFAULT TRUE,
+
+	PRIMARY KEY(`id_rastreado`,`id_receiver`), 
+	INDEX(`id_rastreado`), INDEX(`id_receiver`), INDEX(`id_rastreado`, `id_receiver`)
 )
 CHARSET=`UTF8` ENGINE=`INNODB`;
 
@@ -53,6 +64,7 @@ VALUES
 	SHA2('apps', 256),
 	'Henrique Borsatto de Campos'
 );
+
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
