@@ -18,6 +18,7 @@ else
 
 	$j = $stmt->fetch(PDO::FETCH_ASSOC);
 
+	// Contra bruteforce
 	sleep(1);
 	
 	if($j === FALSE)
@@ -46,7 +47,6 @@ else
 		}
 	}
 }
-
 
 exit(json_encode($ReturnArr));
 ?>

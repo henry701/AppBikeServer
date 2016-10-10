@@ -10,7 +10,7 @@ USE `app_mobilidade`;
 SET `FOREIGN_KEY_CHECKS` = 0;
 
 	DROP TABLE IF EXISTS
-		`usuarios`
+		`appb_usuarios`
 	;
 
 SET `FOREIGN_KEY_CHECKS` = 1;
@@ -20,12 +20,12 @@ SET `FOREIGN_KEY_CHECKS` = 1;
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
-CREATE TABLE `usuarios`
+CREATE TABLE `appb_usuarios`
 ( 	
 	`id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
 
 	`email` VARCHAR(140) UNIQUE NOT NULL, 
-	`senha` CHAR(60) NOT NULL CHARSET `ASCII`, -- Crypto string functions.php
+	`senha` CHAR(60) CHARSET `ASCII` NOT NULL, -- Crypto string functions.php
 
 	`nome` VARCHAR(190) NOT NULL,
 
@@ -35,7 +35,7 @@ CHARSET=`UTF8` ENGINE=`INNODB`;
 
 
 
-CREATE TABLE `pareamentos`
+CREATE TABLE `appb_pareamentos`
 (
 	`id_rastreado` BIGINT UNSIGNED NOT NULL,
 	`id_rastreador` BIGINT UNSIGNED NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `pareamentos`
 
 	PRIMARY KEY(`id_rastreado`,`id_rastreador`), 
 	INDEX(`id_rastreado`), INDEX(`id_rastreador`), INDEX(`id_rastreado`, `id_rastreador`), INDEX(`id_rastreado`, `habilitado`), INDEX(`id_rastreador`, `habilitado`), 
-	FOREIGN KEY `id_rastreado` REFERENCES `usuarios`(`id`),	FOREIGN KEY `id_rastreador` REFERENCES `usuarios`(`id`)
+	FOREIGN KEY (`id_rastreado`) REFERENCES `appb_usuarios`(`id`),	FOREIGN KEY (`id_rastreador`) REFERENCES `appb_usuarios`(`id`)
 )
 CHARSET=`UTF8` ENGINE=`INNODB`;
 
@@ -53,11 +53,11 @@ CHARSET=`UTF8` ENGINE=`INNODB`;
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
-INSERT INTO `usuarios`
+INSERT INTO `appb_usuarios`
 (
 	`email`,
 	`senha`,
-	`nome`,
+	`nome`
 )
 VALUES
 (
@@ -73,77 +73,4 @@ VALUES
 
 
 
-
-
--- Select cervejas total informação
-SELECT DISTINCT
-	cervejas.id as id,
-    cervejas.nome as nome,
-    cervejas.descricao as descricao,
-    cervejas.abv as abv,
-    cervejas_estilos.id_estilo as id_estilo,
-    cervejas_paises.id_pais as id_pais
-FROM
-	cervejas
-INNER JOIN 
-	cervejas_estilos
-ON
-	cervejas_estilos.id_cerveja = cervejas.id
-INNER JOIN 
-	cervejas_paises
-ON
-	cervejas_paises.id_cerveja = cervejas.id
-;  
-
-
-
-
--- Select cervejas total informação única pronta para PHP explode nas de "array"
-SELECT DISTINCT
-	cervejas.id as id,
-    cervejas.nome as nome,
-    cervejas.descricao as descricao,
-    cervejas.abv as abv,
-    (SELECT GROUP_CONCAT(cervejas_estilos.id_estilo SEPARATOR ',') FROM cervejas_estilos WHERE cervejas.id = cervejas_estilos.id_cerveja) as ids_estilos,
-    (SELECT GROUP_CONCAT(cervejas_paises.id_pais SEPARATOR ',') FROM cervejas_paises WHERE cervejas.id = cervejas_paises.id_cerveja) as ids_paises
-FROM
-	cervejas
-;
-
-
-
-
-
-
--- Select países usados
-SELECT DISTINCT
-	paises.id as id,
-    paises.nome as nome
-FROM
-	paises
-WHERE
-	paises.id IN (SELECT cervejas_paises.id_pais FROM cervejas_paises)
-;
-
--- Select estilos usados
-SELECT DISTINCT
-	estilos.id as id,
-    estilos.nome as nome
-FROM
-	estilos
-WHERE
-	estilos.id IN (SELECT cervejas_estilos.id_estilo FROM cervejas_estilos)
-;
-
-
-
-
-
--- Select Estatísticas de ABV
-SELECT
-	MAX(abv) as maximo,
-    MIN(abv) as minimo,
-    AVG(abv) as media
-FROM
-	cervejas
-;
+-- Selects exemplos vem aqui depois

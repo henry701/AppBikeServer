@@ -111,7 +111,7 @@ function numeric_file_sort_ASC(/*String*/ $filename1, /*String*/ $filename2)
 {
 	$filename1 = intval(chopExtension(basename($filename1)));
 	$filename2 = intval(chopExtension(basename($filename2)));
-	
+
 	return ($filename1 > $filename2);
 }
 
@@ -140,23 +140,23 @@ function Get_User_Constants()
 function Write_To_Logfile()
 {
 	$finalText = '';
-	
+
 	$finalText .= '==============================================' . "\n";
 	$finalText .= gmdate('Y-m-d h:i:s \G\M\T') . "\n";
 	$finalText .= '==============================================' . "\n";
-	
+
 	foreach (func_get_args() as $param)
 	{
 		$finalText .= print_r($param,true) . "\n";
 	}
-	
+
 	$finalText .= "\n";
 	$finalText .= '==============================================' . "\n";
 	$finalText .= '==============================================' . "\n";
 	$finalText .= '==============================================' . "\n";
-	
+
 	$finalText .= "\n\n";
-	
+
 	file_put_contents(DEBUG_FILE,$finalText,FILE_APPEND);
 }
 
@@ -180,16 +180,16 @@ function ParseAcceptHeaderFormat($str)
 {
 	$str = strval($str);
 	$Farr = Array();
-	
+
 	$bufs = Array('', '1.0');
 	$i = 0;
-	
+
 	$str = $str . ',';
 
 	for($j=0; $j<strlen($str); ++$j)
 	{
 		$char = $str[$j];
-		
+
 		if($char === ',')
 		{
 			$Farr[$bufs[0]] = floatval($bufs[1]);
@@ -212,9 +212,9 @@ function ParseAcceptHeaderFormat($str)
 		$bufs[$i] .= $char;
 		continue;
 	}
-	
+
 	krsort($Farr, SORT_NUMERIC);
-	
+
 	return $Farr;
 }
 
@@ -225,17 +225,17 @@ function SendOverFile($path)
 	$filestr = file_get_contents($path, FILE_TEXT);
 
 	header_remove();
-	
+
 	$HEADERS = getallheaders();
 	$HEADERS = array_change_key_case($HEADERS, CASE_LOWER);
-	
+
 	header('HTTP/1.1 200 OK');
 	// header('Accept-Ranges', 'bytes'); // Need to actually implement this here later i guess
 	header('Vary: Accept-Encoding, User-Agent');
 	header('Content-Type: ' . $mime);
-	
+
 	$HEADERS["accept-encoding"] = ParseAcceptHeaderFormat($HEADERS["accept-encoding"]);
-	
+
 	if(substr($mime,0,6) !== "image/")
 	{
 		foreach($HEADERS["accept-encoding"] as $encoding=>$q)
@@ -347,7 +347,7 @@ function critical_logval()
 function ACTION_logout()
 {
 	$_SESSION = array();
-	if(isset($_COOKIE[session_name()])) 
+	if(isset($_COOKIE[session_name()]))
 	{
 		setcookie(session_name(), '', time()-42000, '/');
 	}
