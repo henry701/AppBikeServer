@@ -12,6 +12,9 @@ header_remove('X-Powered-By');
 
 define('DIRSEPS_REGEX', '/\/|\\\/');
 
+if(is_defined(__DIR__) === FALSE)
+	define('__DIR__', dirname(__FILE__));
+
 define('ROOT_DIRNAME',dirname(__DIR__ . '..' . DIRECTORY_SEPARATOR));
 define('DEBUG_PATH',ROOT_DIRNAME . DIRECTORY_SEPARATOR . 'debug_folder');
 define('DEBUG_FILE',DEBUG_PATH . DIRECTORY_SEPARATOR . 'log.txt');
@@ -21,6 +24,8 @@ ini_set('session.save_path', realpath(ROOT_DIRNAME . DIRECTORY_SEPARATOR . 'sess
 session_start();
 
 ini_set('error_log',DEBUG_PATH . DIRECTORY_SEPARATOR . 'php_errorlog.txt');
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'db_defines.php';
 
 spl_autoload_register(function ($class_name)
 {
