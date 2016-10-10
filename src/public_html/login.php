@@ -12,7 +12,7 @@ else
 {
 	$DBInstance = PDO_MODDED::getInstance();
 
-	$stmt = $DBInstance->prepare("SELECT id, senha FROM users WHERE email = ? LIMIT 1");
+	$stmt = $DBInstance->prepare("SELECT id, senha FROM appb_users WHERE email = ? LIMIT 1");
 	$stmt->bindValue(1, $_POST['user'], PDO::PARAM_STR);
 	$stmt->execute();
 
