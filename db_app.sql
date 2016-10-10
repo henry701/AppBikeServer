@@ -62,7 +62,7 @@ INSERT INTO `usuarios`
 VALUES
 (
 	'henry_tuori@hotmail.com', 
-	SHA2('$2y$10$22AJd80CfcMiSPstTUv0$eGkYx.xFIGfvtuCttqJdzLIp/XmqNnyC', 256),
+	'$2y$10$22AJd80CfcMiSPstTUv0$eGkYx.xFIGfvtuCttqJdzLIp/XmqNnyC',
 	'Henrique Borsatto de Campos'
 );
 
