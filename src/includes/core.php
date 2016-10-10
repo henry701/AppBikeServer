@@ -22,13 +22,6 @@ session_start();
 
 ini_set('error_log',DEBUG_PATH . DIRECTORY_SEPARATOR . 'php_errorlog.txt');
 
-define('SQLH_MANAGER', 'mysql');
-define('SQLH_HOST', '127.0.0.1');
-define('SQLH_PORT', '3306');
-define('SQLH_USERNAME', '');
-define('SQLH_PASSWORD', '');
-define('SQLH_DATABASE', 'AppBikeServer');
-
 spl_autoload_register(function ($class_name)
 {
 	try
