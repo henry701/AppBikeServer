@@ -312,4 +312,52 @@ function Print_User_Constants()
 	print_r(get_defined_constants(true)['user']);
 }
 
+
+function logval($forceLogoff = TRUE)
+{
+	if($_SESSION["loggedin"] != TRUE)
+	{
+		if($forceLogoff) ACTION_logout();
+		return FALSE;
+	}
+	else if(time() - $_SESSION["last_activity"] >= 2700)
+	{
+		if($forceLogoff) ACTION_logout();
+		return FALSE;
+	}
+	else
+	{
+		ACTION_updatelet();
+		return TRUE;
+	}
+}
+
+function critical_logval()
+{
+	if(logval() === FALSE)
+	{
+		exit('Não está logado!');
+	}
+	else
+	{
+		return TRUE;
+	}
+}
+
+function ACTION_logout()
+{
+	$_SESSION = array();
+	if(isset($_COOKIE[session_name()])) 
+	{
+		setcookie(session_name(), '', time()-42000, '/');
+	}
+	return FALSE;
+}
+
+function ACTION_updatelet()
+{
+	$_SESSION["last_activity"] = time();
+	return true;
+}
+
 ?>

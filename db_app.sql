@@ -38,11 +38,12 @@ CHARSET=`UTF8` ENGINE=`INNODB`;
 CREATE TABLE `pareamentos`
 (
 	`id_rastreado` BIGINT UNSIGNED NOT NULL,
-	`id_receiver` BIGINT UNSIGNED NOT NULL,
+	`id_rastreador` BIGINT UNSIGNED NOT NULL,
 	`habilitado` BOOL NOT NULL DEFAULT TRUE,
 
-	PRIMARY KEY(`id_rastreado`,`id_receiver`), 
-	INDEX(`id_rastreado`), INDEX(`id_receiver`), INDEX(`id_rastreado`, `id_receiver`)
+	PRIMARY KEY(`id_rastreado`,`id_rastreador`), 
+	INDEX(`id_rastreado`), INDEX(`id_rastreador`), INDEX(`id_rastreado`, `id_rastreador`), INDEX(`id_rastreado`, `habilitado`), INDEX(`id_rastreador`, `habilitado`), 
+	FOREIGN KEY `id_rastreado` REFERENCES `usuarios`(`id`),	FOREIGN KEY `id_rastreador` REFERENCES `usuarios`(`id`)
 )
 CHARSET=`UTF8` ENGINE=`INNODB`;
 
@@ -61,7 +62,7 @@ INSERT INTO `usuarios`
 VALUES
 (
 	'henry_tuori@hotmail.com', 
-	SHA2('apps', 256),
+	SHA2('$2y$10$22AJd80CfcMiSPstTUv0$eGkYx.xFIGfvtuCttqJdzLIp/XmqNnyC', 256),
 	'Henrique Borsatto de Campos'
 );
 

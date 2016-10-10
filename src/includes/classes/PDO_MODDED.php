@@ -1,7 +1,7 @@
 <?php
 class PDO_MODDED extends PDO
 {
-	public static $instance;
+	private static $instance;
 	
 	private function __construct()
 	{
@@ -23,7 +23,7 @@ class PDO_MODDED extends PDO
 	{
         if(isset(self::$instance) === FALSE)
 		{
-            self::$instance = self::__construct();
+            self::$instance = new self();
         }
         return self::$instance;
     }
