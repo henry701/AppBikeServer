@@ -99,9 +99,14 @@ function CryptBlowFish(/*String*/ $password,/*int*/ $runs = 10, $salt = '')
 function CheckCripto(/*String*/ $password = '',/*int*/ $runs = 10, /*String*/ $salt = '', /*String*/ $cripto = '')
 {
 	if($password === '' || $cripto === '')
+	{
 		return FALSE;
+	}
 	if($salt === '')
-		$salt = explode('$', $cripto)[3];
+	{
+		$salt = explode('$', $cripto);
+		$salt = $salt[3];
+	}
 	return hash_equals( $cripto, crypt($password, '$2y$' . $runs . '$' . $salt . '$') );
 }
 
@@ -132,7 +137,8 @@ function escht(/*String*/ $string)
 
 function Get_User_Constants()
 {
-	$Arr = get_defined_constants(true)['user'];
+	$Arr = get_defined_constants(true);
+	$Arr = $Arr['user'];
 	return print_r($Arr,TRUE);
 }
 
@@ -221,7 +227,8 @@ function ParseAcceptHeaderFormat($str)
 function SendOverFile($path)
 {
 	$extension = pathinfo($path, PATHINFO_EXTENSION);
-	$mime = generateUpToDateMimeArray(APACHE_MIME_TYPES_URL)[$extension];
+	$mime = generateUpToDateMimeArray(APACHE_MIME_TYPES_URL);
+	$mime = $mime[$extension];
 	$filestr = file_get_contents($path, FILE_TEXT);
 
 	header_remove();
@@ -309,7 +316,9 @@ if (!function_exists('getallheaders')) {
 
 function Print_User_Constants()
 {
-	print_r(get_defined_constants(true)['user']);
+	$const = get_defined_constants(true);
+	$const = $const['user'];
+	print_r($const);
 }
 
 

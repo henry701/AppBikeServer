@@ -6,7 +6,7 @@ $ReturnArr = Array();
 if(logval(FALSE) === TRUE)
 {
 	$ReturnArr['result'] = TRUE;
-	$ReturnArr['message'] = "J· estava logado!";
+	$ReturnArr['message'] = "J√° estava logado!";
 }
 else
 {
@@ -17,6 +17,8 @@ else
 	$stmt->execute();
 
 	$j = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	$DBInstance::Debug_PDO_Error($stmt, TRUE);
 
 	// Contra bruteforce
 	sleep(1);
@@ -24,7 +26,7 @@ else
 	if($j === FALSE)
 	{
 		$ReturnArr['result'] = FALSE;
-		$ReturnArr['message'] = "Usu·rio n„o existente!";
+		$ReturnArr['message'] = "Usu√°rio n√£o existente!";
 	}
 	else
 	{

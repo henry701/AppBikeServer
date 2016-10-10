@@ -12,7 +12,7 @@ header_remove('X-Powered-By');
 
 define('DIRSEPS_REGEX', '/\/|\\\/');
 
-if(is_defined(__DIR__) === FALSE)
+if(defined('__DIR__') === FALSE)
 	define('__DIR__', dirname(__FILE__));
 
 define('ROOT_DIRNAME',dirname(__DIR__ . '..' . DIRECTORY_SEPARATOR));

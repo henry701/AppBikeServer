@@ -3,8 +3,12 @@ class PDO_MODDED extends PDO
 {
 	private static $instance;
 	
-	private function __construct()
+	public function __construct()
 	{
+		if(isset(self::$instance) === TRUE)
+		{
+            return self::$instance;
+        }
 		try
 		{
 			parent::__construct( SQLH_MANAGER . ':host=' .  SQLH_HOST . ';port=' . SQLH_PORT . ';dbname=' . SQLH_DATABASE . ';charset=utf8',
