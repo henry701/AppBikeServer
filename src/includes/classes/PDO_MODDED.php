@@ -23,6 +23,9 @@ class PDO_MODDED extends PDO
 		}
 	}
 	
+	// Previne o uso de clone
+    private function __clone() {}
+	
 	public static function getInstance()
 	{
         if(isset(self::$instance) === FALSE)

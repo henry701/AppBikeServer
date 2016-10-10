@@ -10,6 +10,8 @@ set_time_limit(60);
 
 header_remove('X-Powered-By');
 
+header("Access-Control-Allow-Origin: *");
+
 define('DIRSEPS_REGEX', '/\/|\\\/');
 
 if(defined('__DIR__') === FALSE)
