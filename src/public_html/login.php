@@ -15,7 +15,7 @@ else
 	$stmt = $DBInstance->prepare("SELECT id, senha FROM appb_usuarios WHERE email = ? LIMIT 1");
 	$stmt->bindValue(1, $_POST['user'], PDO::PARAM_STR);
 	$result = $stmt->execute();
-	
+
 	if($result === FALSE)
 		$DBInstance::Debug_PDO_Error($stmt, TRUE);
 
@@ -23,7 +23,7 @@ else
 
 	// Contra bruteforce
 	sleep(1);
-	
+
 	if($j === FALSE)
 	{
 		$ReturnArr['result'] = FALSE;

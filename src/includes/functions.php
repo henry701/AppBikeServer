@@ -391,4 +391,37 @@ function ACTION_updatelet()
 	return true;
 }
 
-?>
+/*
+funcao que irá executar insercao de dados na tabela de usuarios
+param -> array de dados recebidos do form
+*/
+
+
+function insertNewUsers($receiverData)
+{
+	ini_set('display_errors',1);
+		require '../includes/core.php';
+		$con = PDO_MODDED::getInstance();
+		$returnFrontMessage = array();
+		//buscar dado de email para verificar exitência de email inserido
+		$searchQuery = "SELECT email FROM appb_usuarios WHERE email = {$receiverData['email']} LIMIT 1";
+		$query = $con->query($searchQuery);
+		$returnParam = $query->fetch(PDO::FETCH_ASSOC);
+
+		if (is_array($returnParam)) {
+			if ($returnParam['email'] == $returnParam['email'])
+				$returnFrontMessage['message'] = 'Email ja existente';
+		} else {
+				//realiza inserção
+		     $receiverData = implode(',',$receiverData);
+				 $query = "INSERT INTO appb_usuarios (email,senha,nome) VALUES ({$receiverData})";
+				 $execInsert = $con->query($query);
+
+				if ($execInsert == TRUE)
+						$returnFrontMessage['message'] = 'Cadastro realizado com sucesso';
+				else
+						$returnFrontMessage['message'] = 'erro na syntax, cade a porra da trataiva de erro de db henrique _/_';
+		}
+
+ return var_dump(json_encode($returnFrontMessage));
+}

@@ -1,5 +1,5 @@
 <?php
-// exit();
+exit();
 require_once '../includes/core.php';
 
 /* PRA SENHA E LOGIN */
