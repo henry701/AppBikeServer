@@ -58,5 +58,4 @@ else
 	}
 }
 
-exit(json_encode($ReturnArr));
-?>
+JsonResponse($ReturnArr);
