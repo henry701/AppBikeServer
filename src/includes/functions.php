@@ -399,7 +399,7 @@ param -> array de dados recebidos do form
 
 function insertNewUsers($receiverData)
 {
-	ini_set('display_errors',1);
+		ini_set('display_errors',1);
 		require '../includes/core.php';
 		$con = PDO_MODDED::getInstance();
 		$returnFrontMessage = array();
@@ -409,19 +409,23 @@ function insertNewUsers($receiverData)
 		$returnParam = $query->fetch(PDO::FETCH_ASSOC);
 
 		if (is_array($returnParam)) {
-			if ($returnParam['email'] == $returnParam['email'])
+			if ($receiverData['email'] === $returnParam['email'] )
+				//retornando string vazia
 				$returnFrontMessage['message'] = 'Email ja existente';
 		} else {
 				//realiza inserção
-		     $receiverData = implode(',',$receiverData);
-				 $query = "INSERT INTO appb_usuarios (email,senha,nome) VALUES ({$receiverData})";
-				 $execInsert = $con->query($query);
+				 $columnData = array_keys($receiverData);
+				 $finalColumns = implode(',',$columnData);
+
+				 $receiverData = implode(',',$receiverData);
+
+				 $query = "INSERT INTO appb_usuarios ({$finalColumns}) VALUES ({$receiverData})";
+			 	 $execInsert = $con->query($query);
 
 				if ($execInsert == TRUE)
 						$returnFrontMessage['message'] = 'Cadastro realizado com sucesso';
 				else
-						$returnFrontMessage['message'] = 'erro na syntax, cade a porra da trataiva de erro de db henrique _/_';
+						$returnFrontMessage['message'] = 'erro na syntax, cade a porra da trataiva de erro de db henrique --"';
 		}
-
  return var_dump(json_encode($returnFrontMessage));
 }
