@@ -83,12 +83,21 @@ if(!function_exists('hash_equals')) {
 
 function CryptBlowFish(/*String*/ $password,/*int*/ $runs = 10, $salt = '')
 {
-	$runs = intval($runs);
-	if($runs < 4 || $runs > 31)
-		return FALSE;
-	if(empty($salt) === TRUE)
-		$salt = str_replace( Array('+',DIRECTORY_SEPARATOR), '0', trim(base64_encode(openssl_random_pseudo_bytes(15)),'=') );
-	$cripto = crypt($password, '$2y$' . $runs . '$' . $salt . '$');
+	if(strlen($salt) === 60)
+	{
+		$cripto = crypt($password, $salt);
+	}
+	else
+	{
+		$runs = intval($runs);
+		if($runs < 4 || $runs > 31)
+			return FALSE;
+		if(empty($salt) === TRUE)
+		{
+			$salt = random_string(22, 'abcdefghijklmnopqrstuvwxyz0123456789./');
+		}
+		$cripto = crypt($password, '$2y$' . $runs . '$' . $salt . '$');
+	}
 
 	if(strlen($cripto) === 60)
 		return Array('cripto' => $cripto, 'salt' => $salt);
@@ -107,7 +116,20 @@ function CheckCripto(/*String*/ $password = '',/*int*/ $runs = 10, /*String*/ $s
 		$salt = explode('$', $cripto);
 		$salt = $salt[3];
 	}
-	return hash_equals( $cripto, crypt($password, '$2y$' . $runs . '$' . $salt . '$') );
+	$crpx = CryptBlowFish($password, $runs, $salt);
+	return hash_equals( $cripto, $crpx['cripto'] );
+}
+
+// http://stackoverflow.com/a/1037136/6090603
+function random_string($length, $character_set = 'abcdefghijklmnopqrstuvwxyz0123456789./')
+{
+    $temp_array = Array();
+	for ($i = 0; $i < $length; $i++)
+	{
+		$temp_array[] = $character_set[rand(0, strlen($character_set) - 1)];
+	}
+    shuffle($temp_array);
+    return implode('', $temp_array);
 }
 
 

@@ -10,7 +10,8 @@ USE `app_mobilidade`;
 SET `FOREIGN_KEY_CHECKS` = 0;
 
 	DROP TABLE IF EXISTS
-		`appb_usuarios`
+		`appb_usuarios`,
+        `appb_pareamentos`
 	;
 
 SET `FOREIGN_KEY_CHECKS` = 1;
@@ -62,7 +63,7 @@ INSERT INTO `appb_usuarios`
 VALUES
 (
 	'henry_tuori@hotmail.com', 
-	'$2y$10$22AJd80CfcMiSPstTUv0$eGkYx.xFIGfvtuCttqJdzLIp/XmqNnyC',
+	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC',
 	'Henrique Borsatto de Campos'
 );
 
