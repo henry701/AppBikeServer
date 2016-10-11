@@ -35,6 +35,19 @@ function relativePath($from, $to, $ps = DIRECTORY_SEPARATOR)
 }
 
 
+function JsonResponse($var)
+{
+	if(func_num_args() > 0)
+	{
+		$vr = $var;
+	}
+	else
+	{
+		global $ReturnArr;
+		$vr = $ReturnArr;
+	}
+	exit(json_encode($vr));
+}
 
 
 
