@@ -75,9 +75,15 @@ INSERT INTO `appb_usuarios`
 VALUES
 (
 	'henry_tuori@hotmail.com', 
-	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC',
+	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC', -- apps
 	'Henrique Borsatto de Campos'
-);
+),
+(
+	'zampa', 
+	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC', -- apps
+	'Victor Zampieri Marinho'
+)
+;
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
