@@ -1,10 +1,9 @@
 <?php
-require '../includes/core.php';
-$returnArr = array();
+require_once '../includes/core.php';
 
-if($_POST['logout'] == '') {
-  ACTION_logout();
-  $returnArr['result'] = TRUE;
-  $returnArr['message'] = 'Até logo';
-  JsonResponse($returnArr);
-}
+$ReturnArr = Array();
+
+ACTION_logout();
+$ReturnArr['result'] = TRUE;
+$ReturnArr['message'] = NULL;
+JsonResponse($ReturnArr);

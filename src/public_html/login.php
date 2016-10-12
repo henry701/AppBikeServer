@@ -24,7 +24,7 @@ else
 		$DBInstance::Debug_PDO_Error($stmt);
 		$ReturnArr['result'] = FALSE;
 		$ReturnArr['message'] = "Erro interno do servidor";
-		$ReturnArr['data'] = "File: __FILE__\nLine: __LINE__";
+		$ReturnArr['data'] = "File: " . __FILE__ . "\nLine: " . __LINE__;
 	}
 	else
 	{

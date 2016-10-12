@@ -55,6 +55,7 @@ CREATE TABLE `appb_push_regs`
 (
 	`id_usuario` BIGINT UNSIGNED NOT NULL,
 	`regId` VARCHAR(200) NOT NULL,
+    PRIMARY KEY (`id_usuario`, `regId`),
 	INDEX(`regId`), 
 	FOREIGN KEY (`id_usuario`) REFERENCES `appb_usuarios`(`id`)
 )

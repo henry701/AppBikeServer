@@ -27,7 +27,7 @@ session_start();
 
 ini_set('error_log',DEBUG_PATH . DIRECTORY_SEPARATOR . 'php_errorlog.txt');
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'db_defines.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'credential_defines.php';
 
 spl_autoload_register(function ($class_name)
 {

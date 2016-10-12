@@ -1,3 +1,4 @@
 *.zip
 src/includes/db_defines.php
+src/includes/credential_defines.php
 src/session/*

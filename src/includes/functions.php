@@ -53,7 +53,7 @@ function JsonResponse($var)
 
 
 // http://stackoverflow.com/questions/4783802/converting-string-into-web-safe-uri
-function toAscii($str, $replace=array(), $delimiter='-') {
+function toAscii($str, $replace=Array(), $delimiter='-') {
  if( !empty($replace) ) {
   $str = str_replace((array)$replace, ' ', $str);
  }
@@ -208,7 +208,7 @@ function Write_To_Logfile()
 define('APACHE_MIME_TYPES_URL','http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types');
 function generateUpToDateMimeArray($url)
 {
-    $s=array();
+    $s=Array();
     foreach(@explode("\n",@file_get_contents($url))as $x)
         if(isset($x[0])&&$x[0]!=='#'&&preg_match_all('#([^\s]+)#',$x,$out)&&isset($out[1])&&($c=count($out[1]))>1)
             for($i=1;$i<$c;$i++)
@@ -312,9 +312,9 @@ if (!function_exists('getallheaders')) {
      */
     function getallheaders()
     {
-        $headers = array();
+        $headers = Array();
 
-        $copy_server = array(
+        $copy_server = Array(
             'CONTENT_TYPE'   => 'Content-Type',
             'CONTENT_LENGTH' => 'Content-Length',
             'CONTENT_MD5'    => 'Content-Md5',
@@ -351,9 +351,9 @@ if (!function_exists('getallheaders')) {
 
 function Print_User_Constants()
 {
-	$const = get_defined_constants(true);
-	$const = $const['user'];
-	print_r($const);
+	$DBInstancest = get_defined_constants(true);
+	$DBInstancest = $DBInstancest['user'];
+	print_r($DBInstancest);
 }
 
 
@@ -380,7 +380,11 @@ function critical_logval()
 {
 	if(logval() === FALSE)
 	{
-		exit('Não está logado!');
+		$ReturnArr = Array();
+		$ReturnArr['result'] = FALSE;
+		$ReturnArr['message'] = "Sua sessão expirou!";
+		$ReturnArr['special'] = "RELOG";
+		JsonResponse($ReturnArr);
 	}
 	else
 	{
@@ -390,7 +394,7 @@ function critical_logval()
 
 function ACTION_logout()
 {
-	$_SESSION = array();
+	$_SESSION = Array();
 	if(isset($_COOKIE[session_name()]))
 	{
 		setcookie(session_name(), '', time()-42000, '/');
@@ -403,75 +407,3 @@ function ACTION_updatelet()
 	$_SESSION["last_activity"] = time();
 	return true;
 }
-
-function pushBridge($receiverEmail){
-	require '../includes/core.php';
-	$con = PDO_MODDED::getInstance();
-	$returnFrontMessage = array();
-	//executa query para buscar email que será empareado
-	$searchQuery = "SELECT email FROM appb_usuarios WHERE email = '{$receiverEmail}' LIMIT 1";
-	$query = $con->query($searchQuery);
-	$returnParam = $query->fetch(PDO::FETCH_ASSOC);
-
-	//verifica existencia do email no db e envia push para o aparelho
-	if($returnParam['email'] != NULL){
-		$apiKey = "AIzaSyD2ZmFDACwQxYtU8H_FpnfQh9oJakrUnIk";
-		$regId = "device reg ID";
-
-		$pusher = new AndroidPusher\Pusher($apiKey);
-		$pusher->notify($regId, "Hola");
-
-		print_r($pusher->getOutputAsArray());
-
-		$returnFrontMessage['message'] = "Enviar push para {$returnParam['email']}";
-		return JsonResponse($returnFrontMessage);
-		}else {
-		$returnFrontMessage['message'] = 'Email não localizado, tente novamente';
-		return JsonResponse($returnFrontMessage);
-	}
-	return true;
-}
-
-
-
-
-
-/*
-funcao que irá executar insercao de dados na tabela de usuarios
-param -> array de dados recebidos do form
-*/
-
-/*
-function insertNewUsers($receiverData)
-{
-		ini_set('display_errors',1);
-		require '../includes/core.php';
-		$con = PDO_MODDED::getInstance();
-		$returnFrontMessage = array();
-		//buscar dado de email para verificar exitência de email inserido
-		$searchQuery = "SELECT email FROM appb_usuarios WHERE email = {$receiverData['email']} LIMIT 1";
-		$query = $con->query($searchQuery);
-		$returnParam = $query->fetch(PDO::FETCH_ASSOC);
-
-		if (is_array($returnParam)) {
-			if ($receiverData['email'] === $returnParam['email'] )
-				//retornando string vazia
-				$returnFrontMessage['message'] = 'Email ja existente';
-		} else {
-				//realiza inserção
-				 $columnData = array_keys($receiverData);
-				 $finalColumns = implode(',',$columnData);
-
-				 $receiverData = implode(',',$receiverData);
-
-				 $query = "INSERT INTO appb_usuarios ({$finalColumns}) VALUES ({$receiverData})";
-			 	 $execInsert = $con->query($query);
-
-				if ($execInsert == TRUE)
-						$returnFrontMessage['message'] = 'Cadastro realizado com sucesso';
-				else
-						$returnFrontMessage['message'] = 'erro na syntax, cade a porra da trataiva de erro de db henrique --"';
-		}
- return var_dump(json_encode($returnFrontMessage));
-}
-*/
