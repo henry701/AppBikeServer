@@ -126,7 +126,8 @@ function CheckCripto(/*String*/ $password = '',/*int*/ $runs = 10, /*String*/ $s
 	}
 	if($salt === '')
 	{
-		$salt = $cripto;
+		$salt = explode('$', $cripto);
+		$salt = $salt[3];
 	}
 	$crpx = CryptBlowFish($password, $runs, $salt);
 	return hash_equals( $cripto, $crpx['cripto'] );
@@ -400,6 +401,35 @@ function ACTION_logout()
 function ACTION_updatelet()
 {
 	$_SESSION["last_activity"] = time();
+	return true;
+}
+
+function pushBridge($receiverEmail){
+	ini_set('display_errors',1);
+	require '../includes/core.php';
+	$con = PDO_MODDED::getInstance();
+	$returnFrontMessage = array();
+	//executa query para buscar email que será empareado
+	$searchQuery = "SELECT email FROM appb_usuarios WHERE email = '{$receiverEmail}' LIMIT 1";
+	$query = $con->query($searchQuery);
+	$returnParam = $query->fetch(PDO::FETCH_ASSOC);
+
+	//verifica existencia do email no db e envia push para o aparelho
+	if($returnParam['email'] != NULL){
+		$apiKey = "AIzaSyD2ZmFDACwQxYtU8H_FpnfQh9oJakrUnIk";
+		$regId = "device reg ID";
+
+		$pusher = new AndroidPusher\Pusher($apiKey);
+		$pusher->notify($regId, "Hola");
+
+		print_r($pusher->getOutputAsArray());
+
+		$returnFrontMessage['message'] = "Enviar push para {$returnParam['email']}";
+		return JsonResponse($returnFrontMessage);
+		}else {
+		$returnFrontMessage['message'] = 'Email não localizado, tente novamente';
+		return JsonResponse($returnFrontMessage);
+	}
 	return true;
 }
 
