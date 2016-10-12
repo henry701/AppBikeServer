@@ -5,6 +5,7 @@ critical_logval();
 
 $DBInstance = PDO_MODDED::getInstance();
 
+// Pegar ID do alvo pelo email
 $ReturnArr = Array();
 $stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE email = :email LIMIT 1");
 $stmt->bindValue(':email', $_POST['email_destino'], PDO::PARAM_STR);
@@ -21,14 +22,24 @@ if($result === FALSE)
 
 $idAlvo = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Validar id do alvo
 if($idAlvo === FALSE)
 {
 	$ReturnArr['result'] = FALSE;
 	$ReturnArr['message'] = 'Email não localizado!';
 	return JsonResponse($ReturnArr);
 }
-
 $idAlvo = $idAlvo['id'];
+if($idAlvo == $_SESSION['userid'])
+{
+	$ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = 'Este e-mail pertence a sua própria conta!';
+	return JsonResponse($ReturnArr);
+}
+
+$stmt = $DBInstance->prepare('SELECT regId FROM appb_push_regs WHERE id_usuario = :id_usuario;');
+$stmt->bindValue(':id_usuario', $idAlvo, PDO::PARAM_INT);
+$result = $stmt->execute();
 
 $stmt = $DBInstance->prepare('SELECT regId FROM appb_push_regs WHERE id_usuario = :id_usuario;');
 $stmt->bindValue(':id_usuario', $idAlvo, PDO::PARAM_INT);
@@ -51,7 +62,7 @@ foreach($regIdFetch as $rows)
 }
 
 $pusher = new AndroidPusher(GCM_KEY);
-$pusher->notify($regIds, "Deseja adicionar USR_TAL?");
+$pusher->notify($regIds, "USR_TAL deseja parear sua conta!");
 
 $ReturnArr['result'] = TRUE;
 $ReturnArr['message'] = "Envido push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);

@@ -1,17 +1,17 @@
 <?php
-define('DEBUG', TRUE);
+define('DEBUG', FALSE);
 
 date_default_timezone_set('America/Sao_Paulo');
 ini_set('log_errors', 1);
 if(DEBUG === TRUE)
 {
 	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
+	error_reporting(E_ALL ^ E_NOTICE);
 }
 else
 {
 	ini_set('display_errors', 0);
-	error_reporting(E_ALL ^ E_NOTICE);
+	error_reporting(E_ALL);
 }
 ini_set('memory_limit','512M');
 ini_set('auto_globals_jit', 1);

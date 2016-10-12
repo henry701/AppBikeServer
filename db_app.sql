@@ -42,6 +42,7 @@ CREATE TABLE `appb_pareamentos`
 	`id_rastreado` BIGINT UNSIGNED NOT NULL,
 	`id_rastreador` BIGINT UNSIGNED NOT NULL,
 	`habilitado` BOOL NOT NULL DEFAULT TRUE,
+    `aceito` BOOL NOT NULL DEFAULT FALSE,
 
 	PRIMARY KEY(`id_rastreado`,`id_rastreador`), 
 	INDEX(`id_rastreado`), INDEX(`id_rastreador`), INDEX(`id_rastreado`, `id_rastreador`), INDEX(`id_rastreado`, `habilitado`), INDEX(`id_rastreador`, `habilitado`), 
