@@ -7,7 +7,7 @@ $DBInstance = PDO_MODDED::getInstance();
 
 $ReturnArr = Array();
 $stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE email = :email LIMIT 1");
-$stmt->bindValue(':email', $_POST['user'], PDO::PARAM_STR);
+$stmt->bindValue(':email', $_POST['email_destino'], PDO::PARAM_STR);
 $result = $stmt->execute();
 
 if($result === FALSE)
@@ -53,9 +53,7 @@ foreach($regIdFetch as $rows)
 $pusher = new AndroidPusher(GCM_KEY);
 $pusher->notify($regIds, "Deseja adicionar USR_TAL?");
 
-// print_r($pusher->getOutputAsArray());
-
 $ReturnArr['result'] = TRUE;
-$ReturnArr['message'] = "Enviar push para " . print_r($regIds, TRUE);
+$ReturnArr['message'] = "Envido push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);
 
 JsonResponse($ReturnArr);

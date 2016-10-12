@@ -361,12 +361,12 @@ function logval($forceLogoff = TRUE)
 {
 	if($_SESSION["loggedin"] != TRUE)
 	{
-		if($forceLogoff) ACTION_logout();
+		if($forceLogoff === TRUE) ACTION_logout();
 		return FALSE;
 	}
 	else if(time() - $_SESSION["last_activity"] >= 2700)
 	{
-		if($forceLogoff) ACTION_logout();
+		if($forceLogoff === TRUE) ACTION_logout();
 		return FALSE;
 	}
 	else

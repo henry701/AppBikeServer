@@ -14,7 +14,7 @@ class AndroidPusher
     }
 
     /**
-     * @param string|array $regIds
+     * @param string|Array $regIds
      * @param string $data
      * @throws \Exception
      */
@@ -42,7 +42,7 @@ class AndroidPusher
     }
 
     /**
-     * @return array
+     * @return Array
      */
     public function getOutputAsArray()
     {
@@ -59,7 +59,8 @@ class AndroidPusher
 
     private function getHeaders()
     {
-        return array(
+        return Array
+		(
             'Authorization: key=' . $this->apiKey,
             'Content-Type: application/json'
         );
@@ -67,9 +68,10 @@ class AndroidPusher
 
     private function getPostFields($regIds, $data)
     {
-        $fields = array(
-            'registration_ids' => is_string($regIds) ? [$regIds] : $regIds,
-            'data'             => is_string($data) ? ['message' => $data] : $data,
+        $fields = Array
+		(
+            'registration_ids' => is_string($regIds) ? Array($regIds) : $regIds,
+            'data'             => is_string($data) ? Array('message' => $data) : $data,
         );
 
         return json_encode($fields,JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP/* | JSON_UNESCAPED_UNICODE*/);

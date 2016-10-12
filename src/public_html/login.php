@@ -52,7 +52,7 @@ else
 			else
 			{
 				$ReturnArr['result'] = FALSE;
-				$ReturnArr['message'] = "Senha incorreta! " . $j['senha'] . ' ' . CryptBlowFish($_POST['senha'], 10, $j['senha']);
+				$ReturnArr['message'] = "Senha incorreta!";
 			}
 		}
 	}
