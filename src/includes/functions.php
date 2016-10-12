@@ -405,7 +405,6 @@ function ACTION_updatelet()
 }
 
 function pushBridge($receiverEmail){
-	ini_set('display_errors',1);
 	require '../includes/core.php';
 	$con = PDO_MODDED::getInstance();
 	$returnFrontMessage = array();
@@ -432,6 +431,10 @@ function pushBridge($receiverEmail){
 	}
 	return true;
 }
+
+
+
+
 
 /*
 funcao que irá executar insercao de dados na tabela de usuarios
