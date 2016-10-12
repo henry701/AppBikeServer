@@ -1,2 +1,3 @@
 *.zip
 src/includes/db_defines.php
+src/session/*

@@ -126,8 +126,7 @@ function CheckCripto(/*String*/ $password = '',/*int*/ $runs = 10, /*String*/ $s
 	}
 	if($salt === '')
 	{
-		$salt = explode('$', $cripto);
-		$salt = $salt[3];
+		$salt = $cripto;
 	}
 	$crpx = CryptBlowFish($password, $runs, $salt);
 	return hash_equals( $cripto, $crpx['cripto'] );
@@ -409,7 +408,7 @@ funcao que irá executar insercao de dados na tabela de usuarios
 param -> array de dados recebidos do form
 */
 
-
+/*
 function insertNewUsers($receiverData)
 {
 		ini_set('display_errors',1);
@@ -442,3 +441,4 @@ function insertNewUsers($receiverData)
 		}
  return var_dump(json_encode($returnFrontMessage));
 }
+*/

@@ -37,7 +37,7 @@ else
 		}
 		else
 		{
-			$PasswordCheck = CheckCripto($_POST['senha'], 10, '', $j['senha']);
+			$PasswordCheck = CheckCripto($_POST['senha'], 10, $j['senha'], $j['senha']);
 
 			if($PasswordCheck === TRUE)
 			{
@@ -52,7 +52,7 @@ else
 			else
 			{
 				$ReturnArr['result'] = FALSE;
-				$ReturnArr['message'] = "Senha incorreta!";
+				$ReturnArr['message'] = "Senha incorreta! " . $j['senha'] . ' ' . CryptBlowFish($_POST['senha'], 10, $j['senha']);
 			}
 		}
 	}
