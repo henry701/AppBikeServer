@@ -11,7 +11,7 @@ SET `FOREIGN_KEY_CHECKS` = 0;
 
 	DROP TABLE IF EXISTS
 		`appb_usuarios`,
-        `appb_pareamentos`,
+		`appb_pareamentos`,
 		`appb_push_regs`
 	;
 
@@ -42,7 +42,7 @@ CREATE TABLE `appb_pareamentos`
 	`id_rastreado` BIGINT UNSIGNED NOT NULL,
 	`id_rastreador` BIGINT UNSIGNED NOT NULL,
 	`habilitado` BOOL NOT NULL DEFAULT TRUE,
-    `aceito` BOOL NOT NULL DEFAULT FALSE,
+	`aceito` BOOL NOT NULL DEFAULT FALSE,
 
 	PRIMARY KEY(`id_rastreado`,`id_rastreador`), 
 	INDEX(`id_rastreado`), INDEX(`id_rastreador`), INDEX(`id_rastreado`, `id_rastreador`), INDEX(`id_rastreado`, `habilitado`), INDEX(`id_rastreador`, `habilitado`), 
@@ -56,11 +56,11 @@ CREATE TABLE `appb_push_regs`
 (
 	`id_usuario` BIGINT UNSIGNED NOT NULL,
 	`regId` VARCHAR(200) NOT NULL,
-    PRIMARY KEY (`id_usuario`, `regId`),
+	PRIMARY KEY (`id_usuario`, `regId`),
 	INDEX(`regId`), 
 	FOREIGN KEY (`id_usuario`) REFERENCES `appb_usuarios`(`id`)
 )
-CHARSET=`UTF8` ENGINE=`MEMORY`;
+CHARSET=`UTF8` ENGINE=`INNODB`;
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
