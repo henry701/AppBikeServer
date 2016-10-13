@@ -20,6 +20,19 @@ function ReturnSelectOptions(/*Array*/ $options, /*String*/ $key_CheckedOption =
 }
 
 
+function IfDBErrorDebug(PDO_MODDED $DBInstance, $result, $debug = DEBUG)
+{
+	if($result === FALSE)
+	{
+		$DBInstance::Debug_PDO_Error($stmt, $debug);
+		// Se debug for true, já vai ter dado Exit lá em cima
+		$ReturnArr['result'] = FALSE;
+		$ReturnArr['message'] = "Erro interno do servidor";
+		JsonResponse($ReturnArr);
+	}
+	else return TRUE;
+}
+
 
 // http://php.net/manual/en/function.realpath.php#105876
 function relativePath($from, $to, $ps = DIRECTORY_SEPARATOR)
