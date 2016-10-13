@@ -1,4 +1,14 @@
 <?php
+
+// http://php.net/manual/pt_BR/function.boolval.php#111674
+if (!function_exists('boolval'))
+{
+	function boolval($val)
+	{
+		return (bool) $val;
+	}
+}
+
 function ReturnSelectOptions(/*Array*/ $options, /*String*/ $key_CheckedOption = NULL, /*Bool*/ $invert_paradigm = FALSE)
 {
 	$str = '';
@@ -18,6 +28,7 @@ function ReturnSelectOptions(/*Array*/ $options, /*String*/ $key_CheckedOption =
 	}
 	return $str;
 }
+
 
 
 function IfDBErrorDebug(PDO_MODDED $DBInstance, $result, $debug = DEBUG)
