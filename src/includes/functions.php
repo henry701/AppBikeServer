@@ -41,8 +41,8 @@ function relativePath($from, $to, $ps = DIRECTORY_SEPARATOR)
   $arTo = explode($ps, rtrim($to, $ps));
   while(count($arFrom) && count($arTo) && ($arFrom[0] == $arTo[0]))
   {
-    array_shift($arFrom);
-    array_shift($arTo);
+	array_shift($arFrom);
+	array_shift($arTo);
   }
   return str_pad("", count($arFrom) * 3, '..'.$ps).implode($ps, $arTo);
 }
@@ -149,13 +149,13 @@ function CheckCripto(/*String*/ $password = '',/*int*/ $runs = 10, /*String*/ $s
 // http://stackoverflow.com/a/1037136/6090603
 function random_string($length, $character_set = 'abcdefghijklmnopqrstuvwxyz0123456789./')
 {
-    $temp_array = Array();
+	$temp_array = Array();
 	for ($i = 0; $i < $length; $i++)
 	{
 		$temp_array[] = $character_set[rand(0, strlen($character_set) - 1)];
 	}
-    shuffle($temp_array);
-    return implode('', $temp_array);
+	shuffle($temp_array);
+	return implode('', $temp_array);
 }
 
 
@@ -170,12 +170,12 @@ function numeric_file_sort_ASC(/*String*/ $filename1, /*String*/ $filename2)
 
 function chopExtension($filename)
 {
-    return substr($filename, 0, strrpos($filename, '.'));
+	return substr($filename, 0, strrpos($filename, '.'));
 }
 
 function filterhtmlspecials(/*String*/ $string)
 {
-    return htmlspecialchars($string, ENT_HTML5 | ENT_QUOTES, 'UTF-8');
+	return htmlspecialchars($string, ENT_HTML5 | ENT_QUOTES, 'UTF-8');
 }
 
 function escht(/*String*/ $string)
@@ -221,12 +221,12 @@ function Write_To_Logfile()
 define('APACHE_MIME_TYPES_URL','http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types');
 function generateUpToDateMimeArray($url)
 {
-    $s=Array();
-    foreach(@explode("\n",@file_get_contents($url))as $x)
-        if(isset($x[0])&&$x[0]!=='#'&&preg_match_all('#([^\s]+)#',$x,$out)&&isset($out[1])&&($c=count($out[1]))>1)
-            for($i=1;$i<$c;$i++)
-                $s[$out[1][$i]]=$out[1][0];
-    return $s;
+	$s=Array();
+	foreach(@explode("\n",@file_get_contents($url))as $x)
+		if(isset($x[0])&&$x[0]!=='#'&&preg_match_all('#([^\s]+)#',$x,$out)&&isset($out[1])&&($c=count($out[1]))>1)
+			for($i=1;$i<$c;$i++)
+				$s[$out[1][$i]]=$out[1][0];
+	return $s;
 }
 
 
@@ -318,46 +318,46 @@ function SendOverFile($path)
 // https://github.com/ralouphie/getallheaders
 if (!function_exists('getallheaders')) {
 
-    /**
-     * Get all HTTP header key/values as an associative array for the current request.
-     *
-     * @return string[string] The HTTP header key/value pairs.
-     */
-    function getallheaders()
-    {
-        $headers = Array();
+	/**
+	 * Get all HTTP header key/values as an associative array for the current request.
+	 *
+	 * @return string[string] The HTTP header key/value pairs.
+	 */
+	function getallheaders()
+	{
+		$headers = Array();
 
-        $copy_server = Array(
-            'CONTENT_TYPE'   => 'Content-Type',
-            'CONTENT_LENGTH' => 'Content-Length',
-            'CONTENT_MD5'    => 'Content-Md5',
-        );
+		$copy_server = Array(
+			'CONTENT_TYPE'   => 'Content-Type',
+			'CONTENT_LENGTH' => 'Content-Length',
+			'CONTENT_MD5'	=> 'Content-Md5',
+		);
 
-        foreach ($_SERVER as $key => $value) {
-            if (substr($key, 0, 5) === 'HTTP_') {
-                $key = substr($key, 5);
-                if (!isset($copy_server[$key]) || !isset($_SERVER[$key])) {
-                    $key = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', $key))));
-                    $headers[$key] = $value;
-                }
-            } elseif (isset($copy_server[$key])) {
-                $headers[$copy_server[$key]] = $value;
-            }
-        }
+		foreach ($_SERVER as $key => $value) {
+			if (substr($key, 0, 5) === 'HTTP_') {
+				$key = substr($key, 5);
+				if (!isset($copy_server[$key]) || !isset($_SERVER[$key])) {
+					$key = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', $key))));
+					$headers[$key] = $value;
+				}
+			} elseif (isset($copy_server[$key])) {
+				$headers[$copy_server[$key]] = $value;
+			}
+		}
 
-        if (!isset($headers['Authorization'])) {
-            if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-                $headers['Authorization'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
-            } elseif (isset($_SERVER['PHP_AUTH_USER'])) {
-                $basic_pass = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : '';
-                $headers['Authorization'] = 'Basic ' . base64_encode($_SERVER['PHP_AUTH_USER'] . ':' . $basic_pass);
-            } elseif (isset($_SERVER['PHP_AUTH_DIGEST'])) {
-                $headers['Authorization'] = $_SERVER['PHP_AUTH_DIGEST'];
-            }
-        }
+		if (!isset($headers['Authorization'])) {
+			if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+				$headers['Authorization'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+			} elseif (isset($_SERVER['PHP_AUTH_USER'])) {
+				$basic_pass = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : '';
+				$headers['Authorization'] = 'Basic ' . base64_encode($_SERVER['PHP_AUTH_USER'] . ':' . $basic_pass);
+			} elseif (isset($_SERVER['PHP_AUTH_DIGEST'])) {
+				$headers['Authorization'] = $_SERVER['PHP_AUTH_DIGEST'];
+			}
+		}
 
-        return $headers;
-    }
+		return $headers;
+	}
 
 }
 
