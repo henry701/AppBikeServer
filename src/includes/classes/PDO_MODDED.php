@@ -7,8 +7,8 @@ class PDO_MODDED extends PDO
 	{
 		if(isset(self::$instance) === TRUE)
 		{
-            return self::$instance;
-        }
+			return self::$instance;
+		}
 		try
 		{
 			parent::__construct( SQLH_MANAGER . ':host=' .  SQLH_HOST . ';port=' . SQLH_PORT . ';dbname=' . SQLH_DATABASE . ';charset=utf8',
@@ -24,22 +24,22 @@ class PDO_MODDED extends PDO
 	}
 	
 	// Previne o uso de clone
-    private function __clone() {}
+	private function __clone() {}
 	
 	public static function getInstance()
 	{
-        if(isset(self::$instance) === FALSE)
+		if(isset(self::$instance) === FALSE)
 		{
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 
 	// Returns number of rows found by previous SELECT statement.
-    public function last_row_count()
-    {
-    	return $this->query("SELECT FOUND_ROWS();")->fetchColumn();
-    }
+	public function last_row_count()
+	{
+		return $this->query("SELECT FOUND_ROWS();")->fetchColumn();
+	}
 
 	// For debugging
 	public function Debug_PDO_Error(PDOStatement $stmt = NULL, /*Bool*/ $critical_exit = FALSE)
