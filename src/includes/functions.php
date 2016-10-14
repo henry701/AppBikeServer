@@ -169,7 +169,22 @@ function random_string($length, $character_set = 'abcdefghijklmnopqrstuvwxyz0123
 	return implode('', $temp_array);
 }
 
+// http://php.net/manual/pt_BR/function.strcasecmp.php#107016
+function mb_strcasecmp($str1, $str2, $encoding = null) {
+    if (null === $encoding) { $encoding = mb_internal_encoding(); }
+    return strcmp(mb_strtoupper($str1, $encoding), mb_strtoupper($str2, $encoding));
+}
 
+function str_case_to_bool($val)
+{
+	if(mb_strcasecmp($val, "true") === 0)
+		$val = TRUE;
+	elseif(mb_strcasecmp($val, "false") === 0)
+		$val = FALSE;
+	else
+		$val = NULL;
+	return $val;
+}
 
 function numeric_file_sort_ASC(/*String*/ $filename1, /*String*/ $filename2)
 {

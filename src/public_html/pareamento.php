@@ -5,9 +5,10 @@ critical_logval();
 
 $DBInstance = PDO_MODDED::getInstance();
 
-// Pegar ID do alvo pelo email
 $ReturnArr = Array();
-$stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE email = :email LIMIT 1");
+
+// Pegar ID do alvo pelo email
+$stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE email = :email LIMIT 1;");
 $stmt->bindValue(':email', $_POST['email_destino'], PDO::PARAM_STR);
 $result = $stmt->execute();
 
@@ -103,6 +104,6 @@ $pusher = new AndroidPusher(GCM_KEY);
 $pusher->notify($regIds, "$NomeRequest deseja parear com a sua conta!");
 
 $ReturnArr['result'] = TRUE;
-$ReturnArr['message'] = "Envido push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);
+$ReturnArr['message'] = "Enviado push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);
 
 JsonResponse($ReturnArr);
