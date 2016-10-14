@@ -1,6 +1,8 @@
 <?php
 require_once '../includes/core.php';
 
+
+ini_set("display_errors",1);
 critical_logval();
 
 $DBInstance = PDO_MODDED::getInstance();
@@ -10,8 +12,7 @@ $ReturnArr = Array();
 $_POST['resp'] = str_case_to_bool($_POST['resp']);
 $_POST['id'] = intval($_POST['id']);
 
-if($_POST['resp'] === FALSE)
-{
+if($_POST['resp'] === FALSE){
 	// Deleta pareamento
 	$stmt = $DBInstance->prepare("DELETE FROM appb_pareamentos WHERE id_rastreador = :id_deletar AND id_rastreado = :id_usuario;");
 	$stmt->bindValue(':id_deletar', $_POST['id'], PDO::PARAM_INT);

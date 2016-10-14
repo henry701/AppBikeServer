@@ -101,7 +101,7 @@ foreach($regIdFetch as $rows)
 }
 
 $pusher = new AndroidPusher(GCM_KEY);
-$pusher->notify($regIds, "$NomeRequest deseja parear com a sua conta!");
+//$pusher->notify($regIds, "$NomeRequest deseja parear com a sua conta!");
 
 $ReturnArr['result'] = TRUE;
 $ReturnArr['message'] = "Enviado push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);

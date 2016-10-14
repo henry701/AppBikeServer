@@ -2,7 +2,7 @@
 class PDO_MODDED extends PDO
 {
 	private static $instance;
-	
+
 	public function __construct()
 	{
 		if(isset(self::$instance) === TRUE)
@@ -11,7 +11,7 @@ class PDO_MODDED extends PDO
 		}
 		try
 		{
-			parent::__construct( SQLH_MANAGER . ':host=' .  SQLH_HOST . ';port=' . SQLH_PORT . ';dbname=' . SQLH_DATABASE . ';charset=utf8',
+			parent::__construct(SQLH_MANAGER . ':host=' .  SQLH_HOST . ';port=' . SQLH_PORT . ';dbname=' . SQLH_DATABASE . ';charset=utf8',
 			SQLH_USERNAME, SQLH_PASSWORD, array(PDO::ATTR_PERSISTENT => true, PDO::MYSQL_ATTR_FOUND_ROWS => true) );
 			//The second array attribute is useful so you can use rowCount() to see all rows MATCHED by UPDATE statements, not only the changed ones.
 			//The first one grants a persistent connection, which means less average time spent per query after some queries.
@@ -22,10 +22,10 @@ class PDO_MODDED extends PDO
 			exit('Erro 1001d');
 		}
 	}
-	
+
 	// Previne o uso de clone
 	private function __clone() {}
-	
+
 	public static function getInstance()
 	{
 		if(isset(self::$instance) === FALSE)
