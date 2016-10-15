@@ -1,8 +1,6 @@
 <?php
 require_once '../includes/core.php';
 
-
-ini_set("display_errors",1);
 critical_logval();
 
 $DBInstance = PDO_MODDED::getInstance();

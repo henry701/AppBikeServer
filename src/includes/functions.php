@@ -392,7 +392,7 @@ function Print_User_Constants()
 
 function logval($forceLogoff = TRUE)
 {
-	if($_SESSION["loggedin"] != TRUE)
+	if(@$_SESSION["loggedin"] != TRUE)
 	{
 		if($forceLogoff === TRUE) ACTION_logout();
 		return FALSE;
