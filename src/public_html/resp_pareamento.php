@@ -9,8 +9,10 @@ $ReturnArr = Array();
 
 $_POST['resp'] = str_case_to_bool($_POST['resp']);
 $_POST['id'] = intval($_POST['id']);
+$_POST['had'] = str_case_to_bool($_POST['had']);
 
-if($_POST['resp'] === FALSE){
+if($_POST['resp'] === FALSE)
+{
 	// Deleta pareamento
 	$stmt = $DBInstance->prepare("DELETE FROM appb_pareamentos WHERE id_rastreador = :id_deletar AND id_rastreado = :id_usuario;");
 	$stmt->bindValue(':id_deletar', $_POST['id'], PDO::PARAM_INT);
@@ -18,10 +20,13 @@ if($_POST['resp'] === FALSE){
 	$result = $stmt->execute();
 	IfDBErrorDebug($DBInstance, $stmt, $result);
 	$rowCount = $stmt->rowCount();
-	if($rowcount === 1)
+	if($rowCount === 1)
 	{
 		$ReturnArr['result'] = TRUE;
-		$ReturnArr['message'] = "Pareamento recusado com sucesso!";
+		if($_POST['had'] === FALSE)
+			$ReturnArr['message'] = "Pareamento recusado com sucesso!";
+		else
+			$ReturnArr['message'] = "Pareamento excluído com sucesso!";
 	}
 	else
 	{
@@ -38,7 +43,7 @@ else
 	$result = $stmt->execute();
 	IfDBErrorDebug($DBInstance, $stmt, $result);
 	$rowCount = $stmt->rowCount();
-	if($rowcount === 1)
+	if($rowCount === 1)
 	{
 		$ReturnArr['result'] = TRUE;
 		$ReturnArr['message'] = "Pareamento aceito com sucesso!";
