@@ -35,6 +35,7 @@ function IfDBErrorDebug(PDO_MODDED $DBInstance, $stmt, $result, $debug = DEBUG)
 {
 	if($result === FALSE)
 	{
+		$ReturnArr = Array();
 		$DBInstance->Debug_PDO_Error($stmt, $debug);
 		// Se debug for true, já vai ter dado Exit lá em cima
 		$ReturnArr['result'] = FALSE;
@@ -221,9 +222,7 @@ function Write_To_Logfile()
 {
 	$finalText = '';
 
-	$finalText .= '==============================================' . "\n";
-	$finalText .= gmdate('Y-m-d h:i:s \G\M\T') . "\n";
-	$finalText .= '==============================================' . "\n";
+	$finalText .= "[" . gmdate('Y-m-d h:i:s \G\M\T') . "]\n";
 
 	foreach (func_get_args() as $param)
 	{
@@ -231,11 +230,6 @@ function Write_To_Logfile()
 	}
 
 	$finalText .= "\n";
-	$finalText .= '==============================================' . "\n";
-	$finalText .= '==============================================' . "\n";
-	$finalText .= '==============================================' . "\n";
-
-	$finalText .= "\n\n";
 
 	file_put_contents(DEBUG_FILE, $finalText, FILE_APPEND);
 }

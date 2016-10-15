@@ -14,11 +14,7 @@ $result = $stmt->execute();
 
 if($result === FALSE)
 {
-	$DBInstance::Debug_PDO_Error($stmt);
-	$ReturnArr['result'] = FALSE;
-	$ReturnArr['message'] = "Erro interno do servidor";
-	$ReturnArr['data'] = "File: " . __FILE__ . "\nLine: " . __LINE__;
-	JsonResponse($ReturnArr);
+	IfDBErrorDebug($DBInstance, $stmt, $result);
 }
 
 $HasCad = $stmt->fetchColumn();
@@ -37,11 +33,7 @@ $result = $stmt->execute();
 
 if($result === FALSE)
 {
-	$DBInstance::Debug_PDO_Error($stmt);
-	$ReturnArr['result'] = FALSE;
-	$ReturnArr['message'] = "Erro interno do servidor";
-	$ReturnArr['data'] = "File: " . __FILE__ . "\nLine: " . __LINE__;
-	JsonResponse($ReturnArr);
+	IfDBErrorDebug($DBInstance, $stmt, $result);
 }
 
 $ReturnArr['result'] = TRUE;

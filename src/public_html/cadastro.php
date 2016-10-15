@@ -49,7 +49,7 @@ else
 	$result = $stmt->execute();
 	if($result === FALSE)
 	{
-		$DBInstance::Debug_PDO_Error($stmt, TRUE);
+		IfDBErrorDebug($DBInstance, $stmt, $result);
 	}
 	else
 	{
@@ -70,15 +70,11 @@ else
 			$stmt->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
 			$stmt->bindValue(':nome', $_POST['nome'], PDO::PARAM_STR);
 			$result = $stmt->execute();
-			if($result === FALSE)
-			{
-				$DBInstance::Debug_PDO_Error($stmt, TRUE);
-			}
-			else
-			{
-				$ReturnArr['result'] = TRUE;
-				$ReturnArr['message'] = "Cadastro realizado com sucesso! Cheque seu e-mail para o link de confirmação.";
-			}
+			
+			IfDBErrorDebug($DBInstance, $stmt, $result);
+			
+			$ReturnArr['result'] = TRUE;
+			$ReturnArr['message'] = "Cadastro realizado com sucesso! Cheque seu e-mail para o link de confirmação.";
 		}
 	}
 }
