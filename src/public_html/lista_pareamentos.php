@@ -12,7 +12,7 @@ $stmt = $DBInstance->prepare("SELECT tb_pr.id_rastreador as id, tb_pr.habilitado
 $stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
 $result = $stmt->execute();
 
-IfDBErrorDebug($DBInstance, $result);
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $Pareamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

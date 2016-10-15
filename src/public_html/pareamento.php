@@ -12,7 +12,7 @@ $stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE email = :email 
 $stmt->bindValue(':email', $_POST['email_destino'], PDO::PARAM_STR);
 $result = $stmt->execute();
 
-IfDBErrorDebug($DBInstance, $result);
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $idAlvo = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -39,7 +39,7 @@ $stmt->bindValue(':id_rastreador', $_SESSION['userid'], PDO::PARAM_INT);
 $stmt->bindValue(':id_rastreado', $idAlvo, PDO::PARAM_INT);
 $result = $stmt->execute();
 
-IfDBErrorDebug($DBInstance, $result);
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $AlreadyPareado = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -68,7 +68,7 @@ $stmt->bindValue(':id_rastreador', $_SESSION['userid'], PDO::PARAM_INT);
 $stmt->bindValue(':id_rastreado', $idAlvo, PDO::PARAM_INT);
 $result = $stmt->execute();
 
-IfDBErrorDebug($DBInstance, $result);
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
 
 
@@ -77,7 +77,7 @@ $stmt = $DBInstance->prepare('SELECT email, nome FROM appb_usuarios WHERE id = :
 $stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
 $result = $stmt->execute();
 
-IfDBErrorDebug($DBInstance, $result);
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $NomeRequest = $stmt->fetch(PDO::FETCH_ASSOC);
 $NomeRequest = $NomeRequest['nome'];
@@ -88,7 +88,7 @@ $stmt = $DBInstance->prepare('SELECT regId FROM appb_push_regs WHERE id_usuario 
 $stmt->bindValue(':id_usuario', $idAlvo, PDO::PARAM_INT);
 $result = $stmt->execute();
 
-IfDBErrorDebug($DBInstance, $result);
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
 
 

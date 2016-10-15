@@ -68,7 +68,7 @@ class PDO_MODDED extends PDO
 		}
 		else
 		{
-			//Colocar tudo isso no arquivo de debug
+			// Colocar tudo isso no arquivo de debug
 			Write_To_Logfile(str_replace(Array('<pre>','</pre>'),'',$errstr));
 			return FALSE;
 		}

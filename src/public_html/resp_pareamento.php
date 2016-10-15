@@ -18,7 +18,7 @@ if($_POST['resp'] === FALSE){
 	$stmt->bindValue(':id_deletar', $_POST['id'], PDO::PARAM_INT);
 	$stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
 	$result = $stmt->execute();
-	IfDBErrorDebug($DBInstance, $result);
+	IfDBErrorDebug($DBInstance, $stmt, $result);
 	$rowCount = $stmt->rowCount();
 	if($rowcount === 1)
 	{
@@ -38,7 +38,7 @@ else
 	$stmt->bindValue(':id_aceitar', $_POST['id'], PDO::PARAM_INT);
 	$stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
 	$result = $stmt->execute();
-	IfDBErrorDebug($DBInstance, $result);
+	IfDBErrorDebug($DBInstance, $stmt, $result);
 	$rowCount = $stmt->rowCount();
 	if($rowcount === 1)
 	{

@@ -31,11 +31,11 @@ function ReturnSelectOptions(/*Array*/ $options, /*String*/ $key_CheckedOption =
 
 
 
-function IfDBErrorDebug(PDO_MODDED $DBInstance, $result, $debug = DEBUG)
+function IfDBErrorDebug(PDO_MODDED $DBInstance, $stmt, $result, $debug = DEBUG)
 {
 	if($result === FALSE)
 	{
-		$DBInstance::Debug_PDO_Error($stmt, $debug);
+		$DBInstance->Debug_PDO_Error($stmt, $debug);
 		// Se debug for true, já vai ter dado Exit lá em cima
 		$ReturnArr['result'] = FALSE;
 		$ReturnArr['message'] = "Erro interno do servidor";
@@ -182,7 +182,7 @@ function str_case_to_bool($val)
 	elseif(mb_strcasecmp($val, "false") === 0)
 		$val = FALSE;
 	else
-		$val = NULL;
+		$val = filter_var($val, FILTER_VALIDATE_BOOLEAN);
 	return $val;
 }
 
@@ -237,7 +237,7 @@ function Write_To_Logfile()
 
 	$finalText .= "\n\n";
 
-	file_put_contents(DEBUG_FILE,$finalText,FILE_APPEND);
+	file_put_contents(DEBUG_FILE, $finalText, FILE_APPEND);
 }
 
 

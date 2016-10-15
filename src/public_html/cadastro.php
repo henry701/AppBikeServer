@@ -9,6 +9,32 @@ $_POST['senha']
 $_POST['nome']
 */
 
+// Validar e-mail, nome e senha (senha deve ser menor do que 72 caracteres (limitação do Blowfish), e maior do que 4 caracteres)
+if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === FALSE)
+{
+    $ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = "E-mail inválido!";
+	JsonResponse($ReturnArr);
+}
+if(empty($_POST['nome']) === TRUE)
+{
+    $ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = "Nome inválido!";
+	JsonResponse($ReturnArr);
+}
+if(strlen($_POST['senha']) < 4)
+{
+    $ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = "A senha deve possuir um mínimo de 4 caracteres!";
+	JsonResponse($ReturnArr);
+}
+if(strlen($_POST['senha']) >= 72)
+{
+    $ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = "A senha deve possuir no máximo 71 caracteres!";
+	JsonResponse($ReturnArr);
+}
+
 if(logval(FALSE) === TRUE)
 {
 	$ReturnArr['result'] = TRUE;
@@ -37,7 +63,6 @@ else
 		}
 		else
 		{
-			// TODO: Validar e-mail, nome e senha (senha deve ser menor do que 72 caracteres, e maior do que 6 caracteres)
 			$Password = CryptBlowFish($_POST['senha'], 10);
 			$Password = $Password['cripto'];
 			$stmt = $DBInstance->prepare("INSERT INTO appb_usuarios (nome, email, senha) VALUES (:nome, :email, :senha)");
