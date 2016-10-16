@@ -11,7 +11,7 @@ if(logval(FALSE) === TRUE)
 else
 {
 	$DBInstance = PDO_MODDED::getInstance();
-	
+
 	// Contra bruteforce
 	sleep(1);
 
