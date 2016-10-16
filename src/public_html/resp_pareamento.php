@@ -41,17 +41,17 @@ if($_POST['resp'] === FALSE)
 	{
 		$ReturnArr['result'] = FALSE;
 		if($_POST['had'] === FALSE)
-			$ReturnArr['message'] = "Erro ao recusar pareamento!" . $_POST['id'] . '  ' . $_SESSION['userid'];
+			$ReturnArr['message'] = "Erro ao recusar pareamento!";
 		else
-			$ReturnArr['message'] = "Erro ao excluir pareamento!" . $_POST['id'] . '  ' . $_SESSION['userid'];
+			$ReturnArr['message'] = "Erro ao excluir pareamento!";
 	}
 }
 else
 {
 	// Setta status de pareamento para aceito
-	$stmt = $DBInstance->prepare("UPDATE appb_pareamentos SET aceito = TRUE WHERE id_rastreador = :id_aceitar AND id_rastreado = :id_usuario;");
-	$stmt->bindValue(':id_aceitar', $_POST['id'], PDO::PARAM_INT);
-	$stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
+	$stmt = $DBInstance->prepare("UPDATE appb_pareamentos SET aceito = TRUE WHERE id_rastreador = :id_rastreador AND id_rastreado = :id_rastreado;");
+	$stmt->bindValue(':id_rastreador', $_POST['id'], PDO::PARAM_INT);
+	$stmt->bindValue(':id_rastreado', $_SESSION['userid'], PDO::PARAM_INT);
 	$result = $stmt->execute();
 	IfDBErrorDebug($DBInstance, $stmt, $result);
 	$rowCount = $stmt->rowCount();

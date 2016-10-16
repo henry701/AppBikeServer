@@ -100,38 +100,21 @@ VALUES
 
 
 INSERT INTO `appb_pareamentos`
-(`id_rastreado`, `id_rastreador`,`habilitado`,`aceito`)
+(`id_rastreador`, `id_rastreado`,`habilitado`,`aceito`)
 VALUES
-(1, 2, true, true)
+-- henry rastreador do zampa
+(1, 2, false, false)
+-- zampa rastreador do henry
 ,(2, 1, false, true)
-,(2, 3, false, true)
-,(3, 2, false, false)
-,(3, 1, false, true)
+-- zampa rastreador do teste
+,(2, 3, false, false)
+-- teste rastreador do zampa
+,(3, 2, false, true)
+-- teste rastreador do henry
+,(3, 1, false, false)
 ;
 
 
-SELECT
-	tbl.id_cara as id,
-    tbl.habilitado as habilitado,
-    tbl.aceito as aceito,
-    tbl.rastreado as rastreado,
-    tbl.email as email
-FROM
-(
-	(
-		SELECT
-			IF(tb_p.id_rastreado=1, tb_p.id_rastreador, tb_p.id_rastreado) as id_cara, 
-			tb_p.habilitado as habilitado, 
-			tb_p.aceito as aceito, 
-			(tb_p.id_rastreado=1) as rastreado, 
-			(SELECT tb_u.email FROM appb_usuarios as tb_u WHERE tb_u.id = id_cara LIMIT 1) as email
-		FROM
-			appb_pareamentos as tb_p
-		WHERE
-			id_rastreado = 1 OR id_rastreador = 1
-	) tbl
-)
-;
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
