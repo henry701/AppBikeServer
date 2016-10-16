@@ -8,9 +8,34 @@ $DBInstance = PDO_MODDED::getInstance();
 $ReturnArr = Array();
 
 // Select todos os pareamentos
-$stmt = $DBInstance->prepare("SELECT tb_pr.id_rastreador as id, tb_pr.habilitado as habilitado, tb_pr.aceito as aceito, (SELECT email FROM appb_usuarios as tb_usr WHERE tb_usr.id = tb_pr.id_rastreador LIMIT 1) as email FROM appb_pareamentos as tb_pr WHERE id_rastreado = :id_usuario;");
+$stmt = $DBInstance->prepare("
+SELECT
+	tbl.id_cara as id,
+    tbl.habilitado as habilitado,
+    tbl.aceito as aceito,
+    tbl.rastreado as rastreado,
+    tbl.email as email
+FROM
+(
+	(
+		SELECT
+			IF(tb_p.id_rastreado=:id_usuario, tb_p.id_rastreador, tb_p.id_rastreado) as id_cara, 
+			tb_p.habilitado as habilitado, 
+			tb_p.aceito as aceito, 
+			(tb_p.id_rastreado=:id_usuario) as rastreado, 
+			(SELECT tb_u.email FROM appb_usuarios as tb_u WHERE tb_u.id = id_cara LIMIT 1) as email
+		FROM
+			appb_pareamentos as tb_p
+		WHERE
+			id_rastreado = :id_usuario OR id_rastreador = :id_usuario
+	) tbl
+)
+;
+");
 $stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
 $result = $stmt->execute();
+
+// "rastreado" referente ao usuario da lista, nao o que fez a request
 
 IfDBErrorDebug($DBInstance, $stmt, $result);
 

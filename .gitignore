@@ -1,5 +1,5 @@
 *.zip
 src/includes/db_defines.php
 src/includes/credential_defines.php
-src/session/*
-src/debug_folder/*
+src/session/
+src/debug_folder/
