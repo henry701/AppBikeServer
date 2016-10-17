@@ -27,7 +27,14 @@ if($result === FALSE){
     $stmt = $DBInstance->query("UPDATE appb_usuarios SET latitude = {$_POST['lat']} , longitude = {$_POST['long']} WHERE id = {$_POST['id']} ;");
     // $stmt = $DBInstance->query("UPDATE appb_usuarios SET latitude = 34 , longitude = 34 WHERE id = 1 ;");
     var_dump($stmt);
-    $ReturnArr['result'] = true;
-    $ReturnArr['message'] = 'Aparelho localizado';
+    if($stmt === TRUE){
+
+      $ReturnArr['result'] = true;
+      $ReturnArr['message'] = 'Aparelho localizado';
+    }else{
+      $ReturnArr['result'] = FALSE;
+      $ReturnArr['message'] = 'ERROR $stmt->error() nao funciona porque seu inútil';
+    }
+
 }
 JsonResponse($ReturnArr);
