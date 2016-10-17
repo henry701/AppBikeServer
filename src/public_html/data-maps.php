@@ -1,4 +1,4 @@
 <?php
-require_once '../includes/core.php';
+// require_once '../includes/core.php';
 
 echo 'oi';
