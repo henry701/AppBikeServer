@@ -1,15 +1,13 @@
-<?php
+	<?php
 require_once '../includes/core.php';
 
 $ReturnArr = Array();
 
-if(logval(FALSE) === TRUE)
-{
+if(logval(FALSE) === TRUE){
 	$ReturnArr['result'] = TRUE;
 	$ReturnArr['message'] = "Já estava logado!";
 }
-else
-{
+else{
 	$DBInstance = PDO_MODDED::getInstance();
 
 	// Contra bruteforce
