@@ -1,40 +1,35 @@
 <?php
-
-ini_set('display_errors',1);
-
 require_once '../includes/core.php';
 
 $ReturnArr = Array();
 $DBInstance = PDO_MODDED::getInstance();
 
-$stmt = $DBInstance->prepare("SELECT latitude,longitude FROM appb_usuarios WHERE id = :id LIMIT 1");
-$stmt->bindValue(':id', 1, PDO::PARAM_STR);
+$stmt = $DBInstance->prepare("SELECT (habilitado = true AND aceito = true) as permitido FROM appb_pareamentos WHERE id_rastreador = :id_rastreador AND id_rastreado = :id_rastreado LIMIT 1");
+$stmt->bindValue(':id_rastreador', $_SESSION['userid'], PDO::PARAM_INT);
+$stmt->bindValue(':id_rastreado', $_POST['id'], PDO::PARAM_INT);
 $result = $stmt->execute();
 
-//verifica execução da query
-if($result === FALSE){
+IfDBErrorDebug($DBInstance, $stmt, $result);
 
-  $ReturnArr['result'] = FALSE;
-  $ReturnArr['message'] = 'erro na query';
+$permissao = $stmt->fetchColumn();
 
-}else{
-    // $j = $stmt->fetch(PDO::FETCH_ASSOC);
-    // print_r($j);
-    // die();
-    // caso não tenha lat/long devemos receber dados da main-mapas.html e realizar inserção
-    // if($j['latitude'] === NULL or $j['longitude'] === NULL)
-
-    $stmt = $DBInstance->query("UPDATE appb_usuarios SET latitude = {$_POST['lat']} , longitude = {$_POST['long']} WHERE id = {$_POST['id']} ;");
-    // $stmt = $DBInstance->query("UPDATE appb_usuarios SET latitude = 34 , longitude = 34 WHERE id = 1 ;");
-    var_dump($stmt);
-    if($stmt === TRUE){
-
-      $ReturnArr['result'] = true;
-      $ReturnArr['message'] = 'Aparelho localizado';
-    }else{
-      $ReturnArr['result'] = FALSE;
-      $ReturnArr['message'] = 'ERROR $stmt->error() nao funciona porque seu inútil';
-    }
-
+if($permissao == FALSE)
+{
+	$ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = "Não possui permissão para rastrear essa conta!";
+	$ReturnArr['data'] = NULL;
+	JsonResponse($ReturnArr);
 }
+
+$stmt = $DBInstance->prepare("SELECT latitude as lat, longitude as lng, data_localizacao as date FROM appb_usuarios WHERE id = :id LIMIT 1");
+$stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+$result = $stmt->execute();
+
+// Verifica execução da query
+IfDBErrorDebug($DBInstance, $stmt, $result);
+
+$ReturnArr['result'] = TRUE;
+$ReturnArr['message'] = "Localização recebida com sucesso!";
+$ReturnArr['data'] = $stmt->fetch(PDO::FETCH_ASSOC);
+
 JsonResponse($ReturnArr);
