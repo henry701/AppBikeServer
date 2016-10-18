@@ -13,7 +13,8 @@ $result = $stmt->execute();
 
 //verifica execução da query
 if($result === FALSE){
-
+  $DBInstance->error();
+  die('erro do mysql');
   $ReturnArr['result'] = FALSE;
   $ReturnArr['message'] = 'erro na query';
 
