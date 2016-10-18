@@ -1,6 +1,8 @@
 <?php
 require_once '../includes/core.php';
 
+critical_logval();
+
 $ReturnArr = Array();
 $DBInstance = PDO_MODDED::getInstance();
 
