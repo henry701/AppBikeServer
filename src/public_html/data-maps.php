@@ -15,7 +15,8 @@ IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $permissao = $stmt->fetchColumn();
 
-if($permissao == FALSE){
+if($permissao == FALSE)
+{
 	$ReturnArr['result'] = FALSE;
 	$ReturnArr['message'] = "Não possui permissão para rastrear essa conta!";
 	$ReturnArr['data'] = NULL;
