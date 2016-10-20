@@ -95,17 +95,17 @@ IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $regIdFetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $regIds = Array();
-foreach($regIdFetch as $rows)
-{
+foreach($regIdFetch as $rows){
 	array_push($regIds, $rows['regId']);
 }
 
 // TIU BOTA UNS ICONES NA PASTA DO CLIENT E CHAMA AI VAI, AUDIO TB POHA
+// TIU PODE PA, VOU COLOCAR, O SOM É PADRÃO DO CELULAR BUCETA, MAS DEMORO
 $pusher = new AndroidPusher(GCM_KEY);
 $pusher->notify($regIds, Array(
-	'message' 	=> "$NomeRequest deseja parear com a sua conta! Entre no app para avaliar o pedido."
-	'title'		=> 'Solititação de Pareamento',
-	// 'subtitle'	=> 'This is a subtitle. subtitle',
+'message' => "$NomeRequest deseja parear com a sua conta! Entre no app para avaliar o pedido."
+'title'	  => 'Solititação de Pareamento',
+	// 'subtitle'	  => 'This is a subtitle. subtitle',
 	// 'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
 	'vibrate'	=> 1,
 	'sound'		=> 1,
