@@ -100,10 +100,24 @@ foreach($regIdFetch as $rows)
 	array_push($regIds, $rows['regId']);
 }
 
+// TIU BOTA UNS ICONES NA PASTA DO CLIENT E CHAMA AI VAI, AUDIO TB POHA
 $pusher = new AndroidPusher(GCM_KEY);
-//$pusher->notify($regIds, "$NomeRequest deseja parear com a sua conta!");
+$pusher->notify($regIds, Array(
+	'message' 	=> "$NomeRequest deseja parear com a sua conta! Entre no app para avaliar o pedido."
+	'title'		=> 'Solititação de Pareamento',
+	// 'subtitle'	=> 'This is a subtitle. subtitle',
+	// 'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
+	'vibrate'	=> 1,
+	'sound'		=> 1,
+	// 'largeIcon'	=> 'large_icon',
+	// 'smallIcon'	=> 'small_icon',
+	// Os dados abaixos são customizados e pode ser usado no evento "push.on('notification', function(data)" do JS Global
+	'additionalData' => Array()
+);
 
 $ReturnArr['result'] = TRUE;
-$ReturnArr['message'] = "Enviado push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);
+// P/ TESTAR PUSH:
+// $ReturnArr['message'] = "Enviado push para: " . print_r($regIds, TRUE) . "\n\n" . print_r($pusher->getOutputAsArray(), TRUE);
+$ReturnArr['message'] = "Solicitação enviada com sucesso!";
 
 JsonResponse($ReturnArr);
