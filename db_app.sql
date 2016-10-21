@@ -26,10 +26,8 @@ CREATE TABLE `appb_usuarios`
 (
 	`id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
 
-	`email` VARCHAR(140) UNIQUE NOT NULL,
+	`user` VARCHAR(140) UNIQUE NOT NULL,
 	`senha` CHAR(60) CHARSET `ASCII` NOT NULL, -- Crypto string functions.php
-
-	`nome` VARCHAR(190) NOT NULL,
 
     `latitude` DECIMAL(32, 30) NULL DEFAULT NULL,
     `longitude` DECIMAL(33, 30) NULL DEFAULT NULL,
@@ -74,25 +72,22 @@ CHARSET=`UTF8` ENGINE=`INNODB`;
 
 INSERT INTO `appb_usuarios`
 (
-	`email`,
+	`user`,
 	`senha`,
-	`nome`
 )
 VALUES
 (
-	'henry_tuori@hotmail.com',
+	'henry',
 	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC', -- apps
 	'Henrique Borsatto de Campos'
 ),
 (
 	'zampa',
 	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC', -- apps
-	'Victor Zampieri Marinho'
 ),
 (
 	'teste',
 	'$2y$10$rrvh.cj2fc0kqbu1d6dlreXou/jFN9OWgvAqi5pm6WsnViPkcBXWC', -- apps
-	'teste'
 )
 ;
 

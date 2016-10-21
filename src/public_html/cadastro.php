@@ -4,22 +4,16 @@ require_once '../includes/core.php';
 $ReturnArr = Array();
 
 /*
-$_POST['email']
+$_POST['user']
 $_POST['senha']
 $_POST['nome']
 */
 
 // Validar e-mail, nome e senha (senha deve ser menor do que 72 caracteres (limitação do Blowfish), e maior do que 4 caracteres)
-if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === FALSE)
+if(strlen($_POST['user']) < 4)
 {
-    $ReturnArr['result'] = FALSE;
-	$ReturnArr['message'] = "E-mail inválido!";
-	JsonResponse($ReturnArr);
-}
-if(empty($_POST['nome']) === TRUE)
-{
-    $ReturnArr['result'] = FALSE;
-	$ReturnArr['message'] = "Nome inválido!";
+  $ReturnArr['result'] = FALSE;
+	$ReturnArr['message'] = "Nome de Usuário inválido! (Mínimo de 4 caracteres)";
 	JsonResponse($ReturnArr);
 }
 if(strlen($_POST['senha']) < 4)
@@ -43,9 +37,8 @@ if(logval(FALSE) === TRUE)
 else
 {
 	$DBInstance = PDO_MODDED::getInstance();
-	$stmt = $DBInstance->prepare("SELECT nome, email FROM appb_usuarios WHERE email = :email OR nome = :nome LIMIT 1");
-	$stmt->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
-	$stmt->bindValue(':nome', $_POST['nome'], PDO::PARAM_STR);
+	$stmt = $DBInstance->prepare("SELECT user FROM appb_usuarios WHERE user = :user LIMIT 1");
+	$stmt->bindValue(':user', $_POST['user'], PDO::PARAM_STR);
 	$result = $stmt->execute();
 	if($result === FALSE)
 	{
@@ -58,23 +51,22 @@ else
 		if($j !== FALSE)
 		{
 			$ReturnArr['result'] = FALSE;
-			$ReturnArr['message'] = "Este e-mail ou nome já existe em nosso sistema!";
+			$ReturnArr['message'] = "Este nome de usuário já existe em nosso sistema!";
 			JsonResponse($ReturnArr);
 		}
 		else
 		{
 			$Password = CryptBlowFish($_POST['senha'], 10);
 			$Password = $Password['cripto'];
-			$stmt = $DBInstance->prepare("INSERT INTO appb_usuarios (nome, email, senha) VALUES (:nome, :email, :senha)");
+			$stmt = $DBInstance->prepare("INSERT INTO appb_usuarios (user, senha) VALUES (:user, :senha)");
 			$stmt->bindValue(':senha', $Password, PDO::PARAM_STR);
-			$stmt->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
-			$stmt->bindValue(':nome', $_POST['nome'], PDO::PARAM_STR);
+			$stmt->bindValue(':user', $_POST['user'], PDO::PARAM_STR);
 			$result = $stmt->execute();
-			
+
 			IfDBErrorDebug($DBInstance, $stmt, $result);
-			
+
 			$ReturnArr['result'] = TRUE;
-			$ReturnArr['message'] = "Cadastro realizado com sucesso! Cheque seu e-mail para o link de confirmação.";
+			$ReturnArr['message'] = "Cadastro realizado com sucesso!";
 		}
 	}
 }

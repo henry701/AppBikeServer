@@ -20,6 +20,7 @@ if($permissao == FALSE)
 	$ReturnArr['result'] = FALSE;
 	$ReturnArr['message'] = "Não possui permissão para rastrear essa conta!";
 	$ReturnArr['data'] = NULL;
+  $ReturnArr['special'] = "NOPERM";
 	JsonResponse($ReturnArr);
 }
 

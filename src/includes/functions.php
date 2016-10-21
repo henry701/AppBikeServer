@@ -397,11 +397,11 @@ function logval($forceLogoff = TRUE)
 		if($forceLogoff === TRUE) ACTION_logout();
 		return FALSE;
 	}
-	else if(time() - $_SESSION["last_activity"] >= 2700)
+	/*else if(time() - $_SESSION["last_activity"] >= 2700)
 	{
 		if($forceLogoff === TRUE) ACTION_logout();
 		return FALSE;
-	}
+	}*/
 	else
 	{
 		ACTION_updatelet();

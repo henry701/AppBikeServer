@@ -7,9 +7,9 @@ $DBInstance = PDO_MODDED::getInstance();
 
 $ReturnArr = Array();
 
-// Pegar ID do alvo pelo email
-$stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE email = :email LIMIT 1;");
-$stmt->bindValue(':email', $_POST['email_destino'], PDO::PARAM_STR);
+// Pegar ID do alvo pelo user
+$stmt = $DBInstance->prepare("SELECT id FROM appb_usuarios WHERE user = :user LIMIT 1;");
+$stmt->bindValue(':user', $_POST['user_destino'], PDO::PARAM_STR);
 $result = $stmt->execute();
 
 IfDBErrorDebug($DBInstance, $stmt, $result);
@@ -20,14 +20,14 @@ $idAlvo = $stmt->fetch(PDO::FETCH_ASSOC);
 if($idAlvo === FALSE)
 {
 	$ReturnArr['result'] = FALSE;
-	$ReturnArr['message'] = 'Email não localizado!';
+	$ReturnArr['message'] = 'Usuário não localizado!';
 	JsonResponse($ReturnArr);
 }
 $idAlvo = $idAlvo['id'];
 if($idAlvo == $_SESSION['userid'])
 {
 	$ReturnArr['result'] = FALSE;
-	$ReturnArr['message'] = 'Este e-mail pertence a sua própria conta!';
+	$ReturnArr['message'] = 'Este Usuário pertence a sua própria conta!';
 	JsonResponse($ReturnArr);
 }
 
@@ -72,15 +72,15 @@ IfDBErrorDebug($DBInstance, $stmt, $result);
 
 
 
-// Pegar nome do usuário que quer o pareamento
-$stmt = $DBInstance->prepare('SELECT email, nome FROM appb_usuarios WHERE id = :id_usuario;');
+// Pegar user do usuário que quer o pareamento
+$stmt = $DBInstance->prepare('SELECT user FROM appb_usuarios WHERE id = :id_usuario;');
 $stmt->bindValue(':id_usuario', $_SESSION['userid'], PDO::PARAM_INT);
 $result = $stmt->execute();
 
 IfDBErrorDebug($DBInstance, $stmt, $result);
 
 $NomeRequest = $stmt->fetch(PDO::FETCH_ASSOC);
-$NomeRequest = $NomeRequest['nome'];
+$NomeRequest = $NomeRequest['user'];
 
 
 // Enviar Push

@@ -14,16 +14,16 @@ SELECT
     tbl.habilitado as habilitado,
     tbl.aceito as aceito,
     tbl.rastreado as rastreado,
-    tbl.email as email
+    tbl.user as user
 FROM
 (
 	(
 		SELECT
-			IF(tb_p.id_rastreado=:id_usuario, tb_p.id_rastreador, tb_p.id_rastreado) as id_cara, 
-			tb_p.habilitado as habilitado, 
-			tb_p.aceito as aceito, 
-			(tb_p.id_rastreado <> :id_usuario) as rastreado, 
-			(SELECT tb_u.email FROM appb_usuarios as tb_u WHERE tb_u.id = id_cara LIMIT 1) as email
+			IF(tb_p.id_rastreado=:id_usuario, tb_p.id_rastreador, tb_p.id_rastreado) as id_cara,
+			tb_p.habilitado as habilitado,
+			tb_p.aceito as aceito,
+			(tb_p.id_rastreado <> :id_usuario) as rastreado,
+			(SELECT tb_u.user FROM appb_usuarios as tb_u WHERE tb_u.id = id_cara LIMIT 1) as user
 		FROM
 			appb_pareamentos as tb_p
 		WHERE
