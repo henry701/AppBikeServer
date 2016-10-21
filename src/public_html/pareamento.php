@@ -103,7 +103,7 @@ foreach($regIdFetch as $rows)
 $pusher = new AndroidPusher(GCM_KEY);
 $pusher->notify($regIds, Array
 (
-	'message' => "$NomeRequest deseja parear com a sua conta! Entre no app para avaliar o pedido."
+	'message' => "$NomeRequest deseja parear com a sua conta! Entre no app para avaliar o pedido.",
 	'title'	  => 'Solititação de Pareamento',
 	// 'subtitle'	  => 'This is a subtitle. subtitle',
 	// 'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
