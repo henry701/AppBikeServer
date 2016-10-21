@@ -1,5 +1,5 @@
 <?php
-define('DEBUG', FALSE);
+define('DEBUG', TRUE);
 
 date_default_timezone_set('America/Sao_Paulo');
 ini_set('log_errors', 1);

@@ -113,7 +113,7 @@ $pusher->notify($regIds, Array
 	// 'smallIcon'	=> 'small_icon',
 	// Os dados abaixos são customizados e pode ser usado no evento "push.on('notification', function(data)" do JS Global
 	'additionalData' => Array()
-);
+));
 
 $ReturnArr['result'] = TRUE;
 // P/ TESTAR PUSH:
