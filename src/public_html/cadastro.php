@@ -12,7 +12,7 @@ $_POST['nome']
 // Validar e-mail, nome e senha (senha deve ser menor do que 72 caracteres (limitação do Blowfish), e maior do que 4 caracteres)
 if(strlen($_POST['user']) < 4)
 {
-  $ReturnArr['result'] = FALSE;
+	$ReturnArr['result'] = FALSE;
 	$ReturnArr['message'] = "Nome de Usuário inválido! (Mínimo de 4 caracteres)";
 	JsonResponse($ReturnArr);
 }
